@@ -1,6 +1,4 @@
-# 
-
-Code to reproduce analyses in `Genomic epidemiology of a densely sampled COVID19 outbreak in China`
+#  Code to reproduce analyses in "Genomic epidemiology of a densely sampled COVID19 outbreak in China"
 
 Important files: 
 
