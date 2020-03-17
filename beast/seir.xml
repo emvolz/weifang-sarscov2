@@ -6,7 +6,7 @@
 	spec="Alignment"
 	name="alignment">
 	
-	                    <sequence id="seq_Australia/VIC01/2020_2020.06557377049_exog" spec="Sequence" taxon="Australia/VIC01/2020_2020.06557377049_exog" totalcount="4" value="nnnnnnnnnn"/>
+	                        <sequence id="seq_Australia/VIC01/2020_2020.06557377049_exog" spec="Sequence" taxon="Australia/VIC01/2020_2020.06557377049_exog" totalcount="4" value="nnnnnnnnnn"/>
                         <sequence id="seq_Finland/1/2020_2020.07650273224_exog" spec="Sequence" taxon="Finland/1/2020_2020.07650273224_exog" totalcount="4" value="nnnnnnnnnn"/>
                         <sequence id="seq_Foshan/20SF207/2020_2020.05737704918_exog" spec="Sequence" taxon="Foshan/20SF207/2020_2020.05737704918_exog" totalcount="4" value="nnnnnnnnnn"/>
                         <sequence id="seq_Foshan/20SF210/2020_2020.05737704918_exog" spec="Sequence" taxon="Foshan/20SF210/2020_2020.05737704918_exog" totalcount="4" value="nnnnnnnnnn"/>
@@ -339,6 +339,18 @@
     
     
     
+    
+    <operator id="STreeTreeScaler.t:tmp" spec="ScaleOperator" scaleFactor="0.5" tree="@Tree.t:algn1" weight="3.0"/>
+	<operator id="STreeTreeRootScaler.t:tmp" spec="ScaleOperator" rootOnly="true" scaleFactor="0.5" tree="@Tree.t:algn1" weight="3.0"/>
+	<operator id="STreeUniformOperator.t:tmp" spec="Uniform" tree="@Tree.t:algn1" weight="30.0"/>
+	<operator id="STreeSubtreeSlide.t:tmp" spec="SubtreeSlide" tree="@Tree.t:algn1" weight="15.0"/>
+	<operator id="STreeNarrow.t:tmp" spec="Exchange" tree="@Tree.t:algn1" weight="15.0"/>
+	<operator id="STreeWide.t:tmp" spec="Exchange" isNarrow="false" tree="@Tree.t:algn1" weight="3.0"/>
+	<operator id="STreeWilsonBalding.t:tmp" spec="WilsonBalding" tree="@Tree.t:algn1" weight="3.0"/>
+
+    
+    
+    
     <operator id="seir.b.operator.t:algn1" spec="RealRandomWalkOperator" windowSize="5.0" parameter="@seir.b.t:algn1" useGaussian='true' weight="1"  />
     <operator id="seir.E.operator.t:algn1" spec="RealRandomWalkOperator" windowSize="0.15" parameter="@seir.E.t:algn1" useGaussian='true' weight="1"  />
 	
@@ -352,6 +364,8 @@
 	<operator id="seir.exog.operator.t:algn1" spec="RealRandomWalkOperator" windowSize="0.05" parameter="@seir.exog.t:algn1" useGaussian='true' weight="1"  />
 	<operator id="seir.exogGrowthRate.operator.t:algn1" spec="RealRandomWalkOperator" windowSize="5.0" parameter="@seir.exogGrowthRate.t:algn1" useGaussian='true' weight="1"  />
 	<operator id="seir.S.operator.t:algn1" spec="RealRandomWalkOperator" windowSize="5.0" parameter="@seir.S.t:algn1" useGaussian='true' weight="1"  />    
+    
+    
     
     
 
