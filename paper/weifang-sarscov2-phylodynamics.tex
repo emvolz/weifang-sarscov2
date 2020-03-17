@@ -68,7 +68,7 @@
 \begin{abstract}
 %~ Please provide an abstract of no more than 150 words. Your abstract should explain the main contributions of your article, and should not contain any material that is not included in the main text.
 Analysis of genetic sequence data from the pandemic SARS Coronavirus 2 can provide insights into epidemic origins, worldwide dispersal, and epidemiological history. With few exceptions, genomic epidemiological analysis has focused on geographically distributed data sets with few isolates in any given location. Here we report an analysis of 20 whole SARS-CoV 2 genomes from a single relatively small and geographically constrained outbreak in Weifang, People's Republic of China. 
-Using Bayesian model-based phylodynamic methods, we estimate the reproduction number for the outbreak to be 1.99(95\% CI:1.48-3.14). 
+Using Bayesian model-based phylodynamic methods, we estimate the reproduction number for the outbreak to be 2.6 (95\% CI:1.5-5). 
 We further estimate the number of infections through time and compare these estimates to confirmed diagnoses by the Weifang Centers for Disease Control. 
 We find that these estimates are consistent with reported cases and there is unlikely to be a large undiagnosed burden of infection over the period we studied. 
 \end{abstract}
@@ -80,7 +80,6 @@ We report a genomic epidemiological analysis of one of the first geographically 
 These data comprise 20 whole genome sequences from confirmed COVID19 infections in Weifang, Shandong Province, People’s Republic of China. 
 The data were collected over the course of several weeks up to February 10, 2020 and overlap with a period of intensifying public health and social distancing measures. 
 Phylodynamic analysis allows us to evaluate epidemiological trends after seeding events which took place in mid to late January, 2020. 
-
 
 The objective of our analysis is to evaluate epidemiological trends based on national surveillance and response efforts by Weifang Centers for Disease Control (CDC). 
 This analysis provides an estimate of the initial rate of spread and reproduction number in Weifang City. 
@@ -109,21 +108,24 @@ The variance of the implied offspring distribution is calibrated to give similar
 
 Despite an initial rapid increase in confirmed cases in Weifang in late January and early February, the number of confirmed cases by Weifang CDC show that outbreak peaked quite early and maximum number of cases ocurred on February 5. 
 Phylodynamic analysis supports the interpretation that control efforts reduced epidemic growth rates and contributed to eventual control. 
-\FIG{fig1}A shows the estimated time scaled phylogeny (maximum clade credibility) including 20 lineages sampled from distinct patients in Weifang and 33 genomes sampled from Wuhan and internationally. 
-\FIG{fig1}B illustrates the phylodynamic model which was co-estimated with the phylogeny which provides estimates of epidemiological parameters summarized in \TABLE{tab1}.
+\FIG{fig1}A illustrates the phylodynamic model which was co-estimated with the phylogeny which provides estimates of epidemiological parameters summarized in \TABLE{tab1}.
+\FIG{fig1}B shows the estimated time scaled phylogeny (maximum clade credibility) including 20 lineages sampled from distinct patients in Weifang and 33 genomes sampled from Wuhan and internationally. 
+
 
 The estimated number of infections is shown Figure \ref{fig:fig1}C.
 The time series of confirmed cases should lag the estimated number of infected because of delays from infection to appearance of symptoms and delays from symptoms to diagnosis. 
 We also expect that an unknown proportion of infections will be missed by the surveillance system due very mild, subclinical, or asymptomatic infection. 
 Our estimates do not support the hypothesis that there was a very large hidden burden of infection in Weifang over the period that the sequence data were sampled. 
-Indeed, our central estimate for the number infected on 10th February is 53, which is only slightly in excess of the 44 cumulative confirmed cases at the end of February. 
+Indeed, our central estimate for the number infected on 10th February is only 142 and the credible intervals cover the 44 cumulative confirmed cases at the end of February. 
+%~ 1.422042e+02 4.322300e+00 1.692355e+03
+
 
 
 
 \begin{figure}
 \begin{fullwidth}
 \includegraphics[width=.9\linewidth]{fig1_2.pdf}
-\caption{ Phylodynamic estimates and epidemiological model. A. A time scaled phylogeny co-estimated with epidemiological parameters. The colour of tips corresponds to location sampling. Red tips were sampled from Weifang, China. The credible interval of TMRCA is shown as a blue bar for all nodes with more than 50\% posterior support. B. A diagram representing the structure of the epidemiological SEIR model which was fitted in tandem with the time scaled phylogeny. Colours correspond to the state of individuals sampled and represented in the tree (A). Note that infected and infectious individuals may occupy a low transmission state (I) or a high transmission rate state (J) to account for high dispersion of the reproduction number. C. Cumulative estimated infections through time produced by fitting the SEIR model and the cumulative confirmed cases (points) reported by Weifan CDC. The shaded region shows the 95\% HPD and the line shows the posterior median. D. A root to tip regression showing approximately linear increase in diversity with time of sampling. 
+\caption{ Phylodynamic estimates and epidemiological model. A. Diagram representing the structure of the epidemiological SEIR model which was fitted in tandem with the time scaled phylogeny. Colours correspond to the state of individuals sampled and represented in the tree (B). Note that infected and infectious individuals may occupy a low transmission state (I) or a high transmission rate state (J) to account for high dispersion of the reproduction number. B. A time scaled phylogeny co-estimated with epidemiological parameters. The colour of tips corresponds to location sampling. Red tips were sampled from Weifang, China. The credible interval of TMRCA is shown as a blue bar for all nodes with more than 50\% posterior support. C. Cumulative estimated infections through time produced by fitting the SEIR model and the cumulative confirmed cases (points) reported by Weifan CDC. The shaded region shows the 95\% HPD and the line shows the posterior median. D. A root to tip regression showing approximately linear increase in diversity with time of sampling. 
 }
 \label{fig:fig1}
 \figsupp[Maximum likelihood time tree.]{A time scaled phylogeny estimated using IQTree and treedater and using the same data as used for the Bayesian analysis.}{\includegraphics[width=.5\textwidth]{treedatertree.pdf}}\label{figsupp:treedater}
@@ -143,13 +145,13 @@ Indeed, our central estimate for the number infected on 10th February is 53, whi
   \hline
  & {\bf Parameter} & {\bf Prior} & {\bf Posterior mean} & \bf{95\% HPD} \\ 
   \hline
-  & Initial infected & Exponential(mean=1) & 2.3 & 0.18-6.9 \\ 
-  & Initial susceptible & Log-normal(mean log=6, sd log=1) & 787 & 102-3235 \\ 
-  & Migration rate\tnote{1} & Exponential(mean=10) & 1.67 & 0.96-2.0 \\ 
-  & Reproduction number & Log-normal(mean log=1.03, sd log =0.5) & 1.99 & 1.48-3.14 \\ 
-  & Molecular clock rate\tnote{2} & Uniform(0.0007,0.003) & 0.0028 & 0.0024-0.003 \\ 
-  & Transition/transversion & Log-normal(mean log=1,sd log=1.25) & 7.0 & 4.4-11.1 \\ 
-  & Gamma shape & Exponential(mean=1) & 0.05 & 0.003-0.12 \\ 
+ & Initial infected & Exponential(mean=1) & 4.5 & 0.26-13 \\ 
+ & Initial susceptible & Log-normal(mean log=6, sd log=1) & 660 & 23-3000 \\ 
+ & Migration rate\tnote{1} & Exponential(mean=10*) & 1.6 & 0.73-2 \\ 
+ & Reproduction number & Log-normal(mean log=1.03, sd log =0.5) & 2.6 & 1.5-5 \\ 
+ & Molecular clock rate\tnote{2} & Uniform(0.0007,0.003) & 0.00098 & 0.00071-0.0015 \\ 
+ & Transition/transversion & Log-normal(mean log=1,sd log=1.25) & 5.5 & 3.1-9.4 \\ 
+ & Gamma shape & Exponential(mean=1) & 0.74 & 0.015-3 \\ 
    \hline
 \end{tabular}
 \begin{tablenotes}\item [1] Units: Migrations per lineage per year. \end{tablenotes}
@@ -157,15 +159,10 @@ Indeed, our central estimate for the number infected on 10th February is 53, whi
 \end{threeparttable}
 \end{fullwidth}
 \end{table}
-%~ ph 20pc: 
-   %~ Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  %~ 1.463   1.644   1.846   1.986   2.217   5.447 
-    %~ 2.5%    97.5% 
-%~ 1.482970 3.146523 
 
-While we do not have sufficient data to detect a large decrease in epidemic growth rates as the epidemic progressed, we do find that the growth rates are somewhat lower than estimated in other settings and during the early epidemic in Wuhan. 
-We estimate $R_0=1.99$ (95\% HPD:1.48-3.14) and the growth rate in cases was approximately 6\% per day. 
-The relatively low value of $R_0$ corresponds to growth during a period when Weifang was implementing a variety of public health interventions and contact tracing to limit epidemic spread.
+We do not have sufficient data to detect a large decrease in epidemic growth rates as the epidemic progressed.
+We estimate $R_0=2.6$ (95\% HPD:1.5-5). The growth rate in estimated infections remained positive but decreased substantially over the sampling period. 
+These estimates correspond to growth during a period when Weifang was implementing a variety of public health interventions and contact tracing to limit epidemic spread.
 These interventions included public health messaging, establishing phone hotlines, encouraging home isolation for recent vitors from Wuhan (January 23-26), optimizing triage of suspected cases in hospitals (January 24), travel restrictions(January 26), extending school closures, and establishing `fever clinics' for consulatation and diagnosis(January 27)\citep{Mao2020-qu}. 
 
 As well as providing novel epidemiological estimates, our results point to the significance of realistic modeling for fidelity of phylogenetic inference.
@@ -183,7 +180,7 @@ Our analysis of 20 SARS-CoV 2 genomes from Weifang, China has confirmed independ
 Surveillance of COVID19 is rendered difficult by high proportions of illness with mild severity and an unknown proportion of asymptomatic infection\citep{Guan2020-ql}. 
 The extent of under-reporting and case ascertainment rates has been widely debated. 
 Analysis of genetic sequence data provides an alternative source of information about epidemic size which can be more robust to imperfect case ascertainment. 
-We do not find evidence for a large hidden burden of infection within Weifang. 
+We do not find evidence for a very large hidden burden of infection within Weifang. 
 The relatively low estimate of $R_0$ is consistent with a slower rate of spread outside of Wuhan and effective control strategies implemented in late January. 
 
 
