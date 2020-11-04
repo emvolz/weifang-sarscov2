@@ -46,4 +46,4 @@ tree_combiner_helper(burnin = 50, fns = NULL, ofn = "combined_trees.trees")
 # system("C:/BEAST/bat/logcombiner.bat -log combined_trees.trees Weifang10.1.xml.trees Weifang10.2.xml.trees Weifang10.3.xml.trees Weifang10.4.xml.trees Weifang10.5.xml.trees Weifang10.6.xml.trees Weifang10.7.xml.trees Weifang10.8.xml.trees -b 50 -o combined_trees.trees")
 
 # Make mcc plot
-# system("C:/BEAST/bat/treeannotator.bat -limit 0.5 -b 0 -lowMem combined_trees.trees mcc.nex")
+# system("C:/BEAST/bat/treeannotator.bat -limit 0.5 -b 0 -lowMem combined_trees.trees data/mcc.nex")
