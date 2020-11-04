@@ -1,8 +1,7 @@
 
 
 # sarscov2Rutils package required: https://github.com/emvolz-phylodynamics/sarscov2Rutils
-# 1) download the .tar.gz zip file
-# In terminal: R CMD INSTALL <location of package>/<name of .tar.gz zip file>
+
 # devtools::install_github("emvolz-phylodynamics/sarscov2Rutils", ref = 'sarscov2Rutils')
 
 
@@ -12,7 +11,7 @@
 
 require(ape)
 library(lubridate)
-require(sarscov2Rutils-sarscov2Rutils)
+require(sarscov2)
 
 
 # Reading in  database
