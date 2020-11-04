@@ -7,7 +7,12 @@ Important files:
 n.b. these cannot be provided in the GitHub package but are accessible from gisaid.org
 
 * beast/seijr0.1.0_skeleton.xml: Main results using PhyDyn package and SEIJR model
-	- Sequence data can not be included in the xml but can be retrieved from GISAID
-* R/eda1.R: Exploratory data analysis and outlier detection using `treedater`, producing ML and time trees, RTT regression
-* Other scripts in R/ will reproduce tables, figures
 
+Pipeline:
+* R/sampling_reference_set.R
+* R/eda1.R: Exploratory data analysis and outlier detection using `treedater`, producing ML and time trees, RTT regression
+* R/produce_xml.R
+* Run PhyDyn on BEAST2 using xmls
+* R/process_BEAST_output.R
+* R/produce_epidemic_plots.R
+* R/produce_trees.R
