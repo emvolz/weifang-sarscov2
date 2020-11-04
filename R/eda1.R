@@ -1,49 +1,74 @@
 invisible('
 Exploratory data analysis with treedater 
-for Weifang sequences: 21.fas
+for Weifang sequences
 ') 
 
 library( ape ) 
+require(sarscov2)
+require(ggplot2)
 
-d <- read.dna( '21.fas', format = 'fasta' )
+d <- read.dna( 'data/algn_prepped.fas', format = 'fasta' )
 raw <- dist.dna( d, model = 'raw' ) 
 hky <- dist.dna( d, model = 'f84' )
 
 .raw <- as.matrix( raw )
 diag(.raw) <- NA 
 print( mean( na.omit(as.vector(  .raw )) ) * 29855 )
-#~ 3.27
 
-tr <- read.tree( 'algn.21.1.fasta.treefile' )
-library( lubridate ) 
-library( treedater )
-sts <- sapply( strsplit( tr$tip.label, '_' ), function(x)  as.numeric(x[length(x)-1] ) )
-names(sts ) <- tr$tip.label
-td = dater( tr, sts, s = 29e3 , meanRateLimits = c(.0007, .0015) )
+# Make the starting trees (will also save a ML tree: "mltree_weifang.pdf")
+# Here we have set the number of trees to 8
+tds = sarscov2::make_starting_trees(fastafn = "data/algn_prepped.fas", treeoutfn = "data/startTrees.nwk", 
+                          plotout = "mltree_weifang.pdf", ntres = 8, ncpu = 1)
 
-pdf('shandong-treedater-21.pdf')
-plot( td ); axisPhylo(root.time = 2020, backward=FALSE)
-dev.off() 
 
-pdf('shandong-rtt-21.pdf')
-rootToTipRegressionPlot( td , bty='n')
-dev.off() 
 
-ot0 = outlierTips( td ) 
-invisible('
-                                                                              taxon
-Wuhan_HBCDC-HB-01_2019_2019.99452054795_exog Wuhan_HBCDC-HB-01_2019_2019.99452054795_exog
-USA_CA1_2020_2020.06010928962_exog                     USA_CA1_2020_2020.06010928962_exog
-                                                       q            p loglik
-Wuhan_HBCDC-HB-01_2019_2019.99452054795_exog 0.001622632 3.061569e-05     NA
-USA_CA1_2020_2020.06010928962_exog           0.025098181 9.471012e-04     NA
-                                                   rates branch.length
-Wuhan_HBCDC-HB-01_2019_2019.99452054795_exog 0.000772136  0.0002475612
-USA_CA1_2020_2020.06010928962_exog           0.000772136  0.0427436814
-> 
+td = tds[[1]]
 
-')
-dd = read.dna( 'algn.21.1.fasta' , format ='fasta')
-toremove <- c( 'Wuhan_HBCDC-HB-01_2019_2019.99452054795_exog', 'USA_CA1_2020_2020.06010928962_exog' )
-dd <- dd[ setdiff( rownames(dd), toremove ), ]
-write.dna(dd,  'algn.21.2.fasta', format = 'fasta' )
+
+# ROOT TO TIP!!
+
+# this is code lifted from rootToTipRegressionPlot()
+dT <- ape::node.depth.edgelength(td)
+dG <- ape::node.depth.edgelength(td$intree)
+
+
+# signif(td$timeOfMRCA, 12)
+
+
+sts <- (td$timeOfMRCA + dT[1:ape::Ntip(td)])
+nts <- (td$timeOfMRCA + dT)
+mtip <- lm(dG[1:ape::Ntip(td)] ~ sts)
+mall <- lm(dG ~ nts)
+
+df <- data.frame(x = dT + td$timeOfMRCA, y = dG, col = c(rep("sample", 
+                                                             ape::Ntip(td)), rep("internal", ape::Nnode(td))))
+
+
+
+rtt <- ggplot2::ggplot(df, aes(x, y, col = col)) + geom_point() + theme_bw() + 
+  geom_abline(slope = coef(mall)[2], intercept = coef(mall)[1], col = "black") +
+  geom_abline(slope = coef(mtip)[2], intercept = coef(mtip)[1], col = "red") + 
+  scale_color_manual(values = c("black", "red")) + 
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  # geom_vline(xintercept = 2020, linetype = "dashed") +
+  theme(legend.position = "", axis.title.y = element_text(size=20),
+        axis.text.y = element_text(size=18),
+        axis.text.x = element_text(size=18)) + 
+  labs(x = "", y = "Evolutionary distance")+
+  scale_y_continuous(breaks = c(0, 0.0001, 0.0002, 0.0003, 0.0004, 0.0005),
+                     labels = scales::number_format(accuracy = 0.0001)) +
+  scale_x_continuous(limits = Date2decimal(c("2019-12-01", "2020-05-01")), 
+                     breaks = Date2decimal(c("2019-12-01", "2020-01-01", "2020-02-01", "2020-03-01", "2020-04-01", "2020-05-01")))
+
+
+cat(' TMRCA ')
+decimal2Date(-coef(mall)[1]/coef(mall)[2])
+
+pdf('weifang-rtt-20.pdf')
+rtt
+dev.off()
+
+
+# This will produce a time tree
+quick_region_treeplot(td = tds[[1]], "WF")
+
