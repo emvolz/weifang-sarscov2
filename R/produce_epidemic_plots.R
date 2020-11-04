@@ -1,11 +1,17 @@
 invisible('
+Producing the epidemic plots in Weifang') 
+
+# Requires:
+# The combined log and traj
+
+invisible('
 Plot infections through time 
-') 
+          ') 
 library( ggplot2 ) 
 library( lubridate )
 
-readRDS('combineTraj0.rds') -> trajdf 
-r <- read.csv( 'weifangReported.csv', header=TRUE , stringsAsFactors=FALSE)
+readRDS('data/traj.rds') -> trajdf 
+r <- read.csv( 'data/reportedcases.csv', header=TRUE , stringsAsFactors=FALSE)
 r$Date <- as.Date( r$Date )
 r$reported = TRUE
 r$`Cumulative confirmed` = r$Cumulative.confirmed.cases
@@ -44,8 +50,7 @@ pldf <- merge( pldf, r , all = TRUE )
 pldf <- pldf[ with( pldf, Date > as.Date('2020-01-10') & Date < as.Date('2020-02-21') ) , ]
 pl = ggplot( pldf ) + geom_point( aes( x=Date, y = `Cumulative confirmed` ) ) + geom_path( aes(x = Date, y = `Cumulative infections` , group = !reported), lwd=1.25) + geom_ribbon( aes(x = Date, ymin=`2.5%`, ymax=`97.5%`, group = !reported) , alpha = .25 ) 
 pl <- pl + theme_minimal()  + xlab('') + 
- ylab ('Cumulative estimated infections (ribbon) 
+  ylab ('Cumulative estimated infections (ribbon) 
  Cumulative confirmed (points)') 
 
-ggsave(pl, file = 'size1.pdf', width = 3.6, height = 3.25, dpi = 600)
-ggsave(pl, file = 'size1.svg', width = 3.6, height = 3.25, dpi = 600)
+ggsave(pl, file = 'cumulative_infections.pdf', width = 3.6, height = 3.25, dpi = 600)
