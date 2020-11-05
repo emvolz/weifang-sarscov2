@@ -17,7 +17,7 @@ library ( treeio )
 
 # Make sure you're in the directory with the logs, trajs and trees
 
-setwd("C:/Users/eg1012/Desktop/COVID_simualtions/Weifang10")
+# setwd("C:/Weifang")
 
 
 ###############################################
